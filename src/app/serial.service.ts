@@ -10,9 +10,17 @@ export class SerialService {
 
   port = null;
 
+  portList = null;
+
   dataChanged = new Subject()
 
   constructor() { }
+
+  async getPorts() {
+    this.portList = await serial.getPorts();
+    console.log(this.portList);
+
+  }
 
   async openPort() {
     try {
@@ -29,8 +37,6 @@ export class SerialService {
       console.error('There was an error opening the serial port:', error);
     }
   }
-
-
 
   async sendData(data) {
     const writer = this.port.writable.getWriter();
